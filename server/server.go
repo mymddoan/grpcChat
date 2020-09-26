@@ -49,22 +49,6 @@ func (s *Server) BroadcastMessage(ctx context.Context, msg *proto.Message) (*pro
 	for _, conn := range s.Connection {
 		wait.Add(1)
 
-		/*
-			go func(msg *proto.Message, conn *Connection) {
-				defer wait.Done()
-
-				if conn.active {
-					err := conn.stream.Send(msg)
-					grpcLog.Info("Sending message to: ", conn.stream)
-
-					if err != nil {
-						grpcLog.Errorf("Error w/ Stream: %s - Error: %v", conn.stream, err)
-						conn.active = false
-						conn.error <- err
-					}
-				}
-			}(msg, conn)
-		*/
 		go func(msg *proto.Message, conn *Connection) {
 			defer wait.Done()
 
